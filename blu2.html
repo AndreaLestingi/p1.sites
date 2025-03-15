@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>La Locanda Dei Mercanti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --navy2: #023e8a;
+            /* Blu scuro secondario */
+            --navy: #0099ff;
+            /* Blu scuro principale */
+            --teal: #ffffff;
+            /* Turchese brillante */
+            --blue: #026d9e;
+            /* Blu chiaro */
+            --sky: #ffffff;
+            /* Celeste chiaro */
+            --ivory: #f8fafc;
+            /* Bianco crema */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--navy);
+            color: var(--ivory);
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(10, 35, 66, 0.7), rgba(10, 35, 66, 0.7)),
+                        url('./public/imgs/image10.jpg') center/cover;
+        }
+
+        .menu-card {
+            transition: all 0.3s ease;
+            background: #374151;
+            border: 1px solid rgb(5, 80, 114);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--teal);
+            box-shadow: 0 10px 15px rgba(2, 132, 199, 0.1);
+        }
+
+        .section-divider {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(to right, var(--teal), var(--blue));
+            margin: 2rem auto;
+        }
+
+        .btn-gradiente {
+            background-image: linear-gradient(to right, var(--teal), #00eeff);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradiente:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 212, 191, 0.3);
+        }
+
+        .bg-wave {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%fffffff' fill-opacity='0.1' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,170.7C960,171,1056,117,1152,96C1248,75,1344,85,1392,90.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+
+        /* Aggiungi o modifica questo nel tuo blocco <style> all'interno del <head> */
+        @media (max-width: 768px) {
+            #mobileMenu {
+                width: calc(100% - 2rem);
+                right: 1rem;
+                left: 1rem;
+                background: rgba(30, 41, 59, 0.98);
+                z-index: 100;
+                /* Aggiungi questo per assicurarti che sia sopra tutto */
+            }
+
+            .menu-card li {
+                font-size: 0.9rem;
+            }
+
+            .menu-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        nav.scrolled {
+            background-color: var(--navy2);
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--navy)]">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 backdrop-blur-md border-b border-[rgba(45,212,191,0.1)] transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-xl md:text-2xl font-bold text-[var(--teal)] cursor-pointer" onclick="showPage('home')">
+                    LA LOCANDA DEI MERCANTI
+                </h1>
+
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showPage('home')"
+                        class="text-[var(--sky)] hover:text-[var(--teal)] font-medium transition-colors">
+                        Home
+                    </button>
+                    <button onclick="showPage('menu')"
+                        class="text-[var(--sky)] hover:text-[var(--teal)] font-medium transition-colors">
+                        Menù
+                    </button>
+                    <button onclick="showPage('contacts')"
+                        class="text-[var(--sky)] hover:text-[var(--teal)] font-medium transition-colors">
+                        Contatti
+                    </button>
+                </div>
+
+                <button id="mobileMenuButton" class="md:hidden text-[var(--teal)]">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="fixed top-16 bg-[rgba(30,41,59,0.98)] shadow-xl rounded-lg p-4 hidden text-[var(--sky)] backdrop-blur-lg">
+        <button onclick="showPage('home')"
+            class="block w-full text-left py-2 px-4 hover:bg-[rgba(14,165,233,0.1)] rounded">
+            Home
+        </button>
+        <button onclick="showPage('menu')"
+            class="block w-full text-left py-2 px-4 hover:bg-[rgba(14,165,233,0.1)] rounded">
+            Menù
+        </button>
+        <button onclick="showPage('contacts')"
+            class="block w-full text-left py-2 px-4 hover:bg-[rgba(14,165,233,0.1)] rounded">
+            Contatti
+        </button>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home" class="page ">
+        <div class="hero-bg min-h-screen flex items-center justify-center text-center text-white">
+            <div class="max-w-4xl px-4">
+                <h2 class="text-5xl font-bold mb-8 text-[var(--teal)]">Cucina di Mare dal 2008</h2>
+                <button onclick="showPage('menu')"
+                    class="btn-gradiente text-[var(--navy2)] px-8 py-3 rounded-full text-lg font-medium">
+                    Scopri il Menù
+                </button>
+            </div>
+        </div>
+
+        <div class="py-20 px-4 bg-[#1d7fc0]">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative h-96 rounded-2xl overflow-hidden border-2 border-[rgba(45,212,191,0.2)]">
+                    <img src="./public/imgs/image6.jpg" alt="Interno"
+                        class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h3 class="text-4xl font-bold text-[var(--teal)] mb-6">
+                        La Nostra Storia
+                    </h3>
+                    <p class="text-[var(--sky)] mb-6 leading-relaxed">
+                        La Locanda dei Mercanti apre le sue porte il 23 agosto del 2008. E' una trattoria situata nel cuore del centro storico di Monopoli. Questa strada, un tempo conosciuta come "Via dei Mercanti", era storicamente frequentata da commercianti e artigiani, riflettendo l'importanza commerciale della città.
+                        <br><br>
+                        La locanda si distingue per la sua atmosfera tradizionale, con tovaglie a quadri e un ambiente accogliente che richiama le tipiche osterie pugliesi. Il menu offre una varietà di piatti a base di pesce fresco, tra cui spiccano i tubettini alla cernia, la calamarata con scampi e gamberi al profumo di tartufo e le trofiette alle vongole con pesto di rucola. La freschezza dei frutti di mare e l'ottimo rapporto qualità-prezzo sono tra gli aspetti più apprezzati.
+                    </p>
+                    <div class="flex gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[var(--teal)]">17</div>
+                            <div class="text-[var(--sky)]">Anni di Storia</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[var(--teal)]">100%</div>
+                            <div class="text-[var(--sky)]">Ingredienti Freschi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sostituisci la sezione carosello con questo codice modificato -->
+        <section id="carousel" class="py-10 px-4 bg-[#1d7fc0]">
+            <h3 class="text-4xl font-bold text-[var(--teal)] mb-6 text-center">
+                Il Locale e i Nostri Piatti Migliori
+            </h3>
+            <div class="max-w-4xl mx-auto relative overflow-hidden">
+                <div id="carouselInner" class="flex transition-transform duration-700">
+                    <img src="./public/imgs/image8.jpg" alt="Image 1" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image1.jpg" alt="Image 2" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image11.jpg" alt="Image 2" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image9.jpg" alt="Image 3" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image2.jpg" alt="Image 4" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image5.jpg" alt="Image 5" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <!-- <img src="./public/imgs/image6.jpg" alt="Image 6" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl"> -->
+                    <!-- <img src="./public/imgs/image7.jpg" alt="Image 7" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl"> -->
+                    <img src="./public/imgs/image4.jpg" alt="Image 8" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <img src="./public/imgs/image3.jpg" alt="Image 9" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl">
+                    <!-- <img src="./public/imgs/image10.jpg" alt="Image 10" class="h-[80vh] object-cover flex-shrink-0 w-full rounded-3xl"> -->
+                </div>
+                <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-6xl text-white px-4 py-2"><</button>
+                <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-6xl text-white px-4 py-2">></button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menu" class="page hidden py-20 px-4  bg-[#1d7fc0]">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-[var(--teal)] text-center mb-16">
+                Il Nostro Menu
+            </h2>
+            <div class="relative h-96 rounded-2xl overflow-hidden border-2 border-[rgba(45,212,191,0.2)] mb-12">
+                <img src="./public/imgs/image12.jpg" alt="Antipasti"
+                    class="w-full h-full object-cover">
+            </div>
+            <div class="space-y-12">
+                <!-- ANTIPASTI -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">PER INIZIARE*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Antipasto del Mercante (6 portate)</span>
+                            <span class="text-[#47bbff]">€15.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Crostini con salmone marinato</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Polpo scottato ad insalata</span>
+                            <span class="text-[#47bbff]">€9.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Baccalà croccante</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Mazzancolle in tegamino piccanti</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Cocktail di gamberi</span>
+                            <span class="text-[#47bbff]">€8.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Cozze gratinate</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <br>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Insalata Caprese (pomodorini, mozzarella, rucola)</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Prosciutto crudo e fiordilatte</span>
+                            <span class="text-[#47bbff]">€11.00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- il crudo -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">IL CRUDO*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Cubettata di tonno</span>
+                            <span class="text-[#47bbff]">€9.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Ostriche</span>
+                            <span class="text-[#47bbff]">€3.00/pz</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Scampi</span>
+                            <span class="text-[#47bbff]">€5.00/5pz</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Gamberi rossi</span>
+                            <span class="text-[#47bbff]">€15.00/5pz</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Tagliatella di seppia</span>
+                            <span class="text-[#47bbff]">€8.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Sfilettati di pesce<br>
+                                <p class="text-xs">In base alla disponibilità</p>
+                            </span>
+                            <span class="text-[#47bbff]">€45.00/kg</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Degustazione per 1 persona</span>
+                            <span class="text-[#47bbff]">€15.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Degustazione per 2 persone</span>
+                            <span class="text-[#47bbff]">€25.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Il gran crudo per 2 persone</span>
+                            <span class="text-[#47bbff]">€35.00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- PRIMI -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">I PRIMI*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Orecchiette pomodoro e basilico</span>
+                            <span class="text-[#47bbff]">€8.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Orecchiette pomodoro, rucola e burrata</span>
+                            <span class="text-[#47bbff]">€10.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Cavatelli con Frutti di Mare</span>
+                            <span class="text-[#47bbff]">€11.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Spaghetti alle vongole</span>
+                            <span class="text-[#47bbff]">€11.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Agnolotti ripieni di melanzane e mozzarella<br>di bufala con gamberi e rucola
+                                croccante</span>
+                            <span class="text-[#47bbff]">€12.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Piatti del giorno (vedi lavagna)</span>
+                            <span class="text-[#47bbff]">€13.00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- PESCE -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">IL PESCE*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Grigliata Mista di Pesce (vedi lavagna)</span>
+                            <span class="text-[#47bbff]">€18.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Polpo alla Brace</span>
+                            <span class="text-[#47bbff]">€10.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Pesce spada</span>
+                            <span class="text-[#47bbff]">€14.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Gamberoni</span>
+                            <span class="text-[#47bbff]">€12.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Tagliata di tonno<br>
+                                <p class="text-xs">tonno, pomodorini, rucola e grana</p>
+                            </span>
+                            <span class="text-[#47bbff]">€16.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Frittura mista (vedi lavagna)</span>
+                            <span class="text-[#47bbff]">€16.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Pescato del giorno<p class="text-xs">Secondo le disponibilità del giorno</p></span>
+                            <span class="text-[#47bbff]">€15/kg</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- L'orto -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">L'ORTO*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Insalata mista<br>
+                                <p class="text-xs">insalata verde, pomodorini, rucola</p>
+                            </span>
+                            <span class="text-[#47bbff]">€5.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Patate fritte</span>
+                            <span class="text-[#47bbff]">€5.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Verdure grigliate</span>
+                            <span class="text-[#47bbff]">€7.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Tortino di verdure</span>
+                            <span class="text-[#47bbff]">€5.00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- La carne -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">LA CARNE*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Tagliata di vitello<br>
+                                <p class="text-xs">con pomodorini, rucola e grana</p>
+                            </span>
+                            <span class="text-[#47bbff]">€15.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Salsiccia</span>
+                            <span class="text-[#47bbff]">€10.00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- BEVANDE - Versione migliorata per mobile -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">LE BEVANDE</h3>
+                
+                    <!-- VINI -->
+                    <div class="mb-8">
+                        <h4 class="font-bold text-lg mb-4">Vini</h4>
+                        <ul class="space-y-4">
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Bianco della casa (75cl)</span>
+                                    <p class="text-xs">Calice <span class="text-[#47bbff]">€3.50</span></p>
+                                </div>
+                                <span class="text-[#47bbff]">€10.00</span>
+                            </li>
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Bianco riserva (75cl)</span>
+                                    <p class="text-xs">Chiedi cosa c'è in fresco</p>
+                                </div>
+                                <span class="text-[#47bbff]">€18.00</span>
+                            </li>
+                
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Rosato della casa (75cl)</span>
+                                    <p class="text-xs">Calice <span class="text-[#47bbff]">€3.50</span></p>
+                                </div>
+                                <span class="text-[#47bbff]">€10.00</span>
+                            </li>
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Rosato riserva</span>
+                                    <p class="text-xs">Chiedi cosa c'è in fresco</p>
+                                </div>
+                                <span class="text-[#47bbff]">€18.00</span>
+                            </li>
+                
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Rosso della casa (75cl)</span>
+                                    <p class="text-xs">Calice <span class="text-[#47bbff]">€3.50</span></p>
+                                </div>
+                                <span class="text-[#47bbff]">€10.00</span>
+                            </li>
+                            <li class="flex flex-wrap justify-between items-center border-b border-gray-600 pb-2">
+                                <div class="w-full md:w-auto mb-1 md:mb-0">
+                                    <span>Rosso riserva</span>
+                                    <p class="text-xs">Chiedi cosa c'è nella nostra cantina</p>
+                                </div>
+                                <span class="text-[#47bbff]">€18.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                
+                    <!-- BIRRE E SOFT DRINK -->
+                    <div>
+                        <h4 class="font-bold text-lg mb-4">Birre e Soft Drink</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Birra (66cl)</span>
+                                <span class="text-[#47bbff]">€5.00</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Fanta (1L)</span>
+                                <span class="text-[#47bbff]">€4.50</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Coca Cola (1L)</span>
+                                <span class="text-[#47bbff]">€4.50</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Coca Cola Zero (33cl)</span>
+                                <span class="text-[#47bbff]">€3.50</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Acqua Minerale (1L)</span>
+                                <span class="text-[#47bbff]">€2.00</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Caffè</span>
+                                <span class="text-[#47bbff]">€1.50</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                                <span>Amari</span>
+                                <span class="text-[#47bbff]">€3.50</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- DOLCI -->
+                <div class="menu-card bg-gray-700 p-8 rounded-2xl shadow-sm text-gray-200">
+                    <h3 class="text-2xl font-bold text-[#47bbff] mb-6">I DOLCI*</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Sorbetto al Limone</span>
+                            <span class="text-[#47bbff]">€3.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Sporcamuso</span>
+                            <span class="text-[#47bbff]">€3.00</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-gray-600 pb-2">
+                            <span>Dolce del Giorno</span>
+                            <span class="text-[#47bbff]">€6.00</span>
+                        </li>
+                    </ul>
+                </div>
+                <p class="text-white">*Alcuni prodotti potrebbero essere congelati</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contatti Page -->
+    <div id="contacts" class="page hidden py-20 px-4 bg-[#1d7fc0]">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-[var(--teal)] text-center mb-16">
+                Contatti
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="menu-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-[var(--teal)] mb-4">
+                            Orari
+                        </h3>
+                        <p class="text-[var(--sky)]">
+                            Aperti tutti i giorni tranne mercoledì<br>
+                            Pranzo: 12:30 - 14:30<br>
+                            Cena: 19:30 - 22:30<br><br>
+                            <p class="text-xs">Gradita prenotazione</p>
+                        </p>
+                    </div>
+
+                    <div class="menu-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-[var(--teal)] mb-4">
+                            Contatti
+                        </h3>
+                        <a href="tel:+393487498059" class="text-[var(--sky)] block hover:text-[var(--teal)] mb-2">
+                            +39 348 7498059
+                        </a>
+                        <a href="tel:+390809376621" class="text-[var(--sky)] block hover:text-[var(--teal)]">
+                            +39 080 9376621
+                        </a>
+                    </div>
+                </div>
+
+                <div class="h-96 rounded-2xl overflow-hidden border-2 border-[rgba(45,212,191,0.2)]">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.123456!2d17.2998571!3d40.9528339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13463525ef92347f%3A0x4531d0731d599f9c!2sTrattoria+La+Locanda+dei+Mercanti!5e0!3m2!1sen!2sit!4v1718741027210!5m2!1sen!2sit"
+                        class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--navy2)] text-[var(--sky)] py-12 border-t border-[rgb(19,51,47)]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[var(--teal)]">Dove Siamo</h4>
+                    <p>
+                        Via Giuseppe Garibaldi, 44<br>
+                        70043 Monopoli BA
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[var(--teal)]">Social</h4>
+                    <a href="https://www.facebook.com/p/La-Locanda-Dei-Mercanti-100056134851099"
+                        class="hover:text-[var(--teal)] transition">
+                        Facebook
+                    </a>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-[var(--teal)]">Info</h4>
+                    <p class="cursor-pointer" onclick="copyToClipboard('08235750729')">P.IVA 08235750729</p>
+                </div>
+            </div>
+            <div class="border-t border-[rgba(45,212,191,0.2)] pt-8 text-center text-[var(--sky)]">
+                <p>© 2024 La Locanda Dei Mercanti - Tutti i diritti riservati</p>
+                <p class="mt-2">Design with 🐠 by <a href="https://lestingi.it" target="_blank"
+                        class="text-[var(--teal)] hover:text-[var(--blue)]">Andrea Lestingi</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mantenere lo script originale con modifiche minime
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+        showPage('home');
+        document.body.style.opacity = '0';
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Aggiungi questo codice per chiudere il menu quando si clicca su una voce
+        const menuItems = mobileMenu.querySelectorAll('a, button');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // New Carousel Script
+        const carouselInner = document.getElementById('carouselInner');
+        const images = carouselInner.querySelectorAll('img');
+        let currentIndex = 0;
+        const totalImages = images.length;
+        const updateCarousel = () => {
+            carouselInner.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+        };
+        document.getElementById('prev').addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? totalImages - 1 : currentIndex - 1;
+            updateCarousel();
+        });
+        document.getElementById('next').addEventListener('click', () => {
+            currentIndex = (currentIndex === totalImages - 1) ? 0 : currentIndex + 1;
+            updateCarousel();
+        });
+
+        // Copy to Clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+        }
+
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 0) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
